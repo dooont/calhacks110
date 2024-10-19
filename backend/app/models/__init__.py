@@ -1,7 +1,4 @@
 # backend/app/models/__init__.py
 
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
-
-from .toilet import Toilet  # Import your models here
+from app import db  # Import db from app.py
+from .toilet import Toilet  # Import models here

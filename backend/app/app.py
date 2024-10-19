@@ -3,24 +3,25 @@
 # backend/app/app.py
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from config import Config
-from models import db
-from routes import api_blueprint
-from flask_cors import CORS
+
+# Initialize extensions without attaching them to the app yet
+db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize extensions
+    # Initialize extensions with the app
     db.init_app(app)
-    CORS(app)  # Enable Cross-Origin Resource Sharing for API endpoints
+    migrate.init_app(app, db)
 
-    # Register blueprints
+    # Import routes or blueprints (import after app is created to avoid circular imports)
+    from models import Toilet
+    from routes import api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
 
     return app
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)

@@ -14,5 +14,3 @@ def classify(file):
     response = model.generate_content([file_upload, "Classify this toilet as clean or dirty. Also, classify is as accessible or not. Give a response formatted like clean, accessible or dirty, not accessible. Accessible means handicap accessible"])
     print(response)
     return response
-
-classify('toilet.jpg')
