@@ -115,22 +115,6 @@ def create_log_in_button():
 def create_hero_section():
     """Create the hero section with heading, description, and action buttons."""
     return rx.box(
-        # rx.heading(
-        #     "Welcome to Our Service",
-        #     font_weight="700",
-        #     margin_bottom="2rem",
-        #     font_size="3rem",
-        #     line_height="1",
-        #     color="#111827",
-        #     as_="h2",
-        # ),
-        # rx.text(
-        #     "Discover the best features and boost your productivity with our innovative solutions",
-        #     margin_bottom="3rem",
-        #     color="#4B5563",
-        #     font_size="1.25rem",
-        #     line_height="1.75rem",
-        # ),
         rx.box(
             create_get_started_button(),
             create_learn_more_button(),
@@ -143,37 +127,6 @@ def create_hero_section():
         margin_left="auto",
         margin_right="auto",
         text_align="center",
-    )
-
-
-def create_footer():
-    """Create a footer component with copyright information and styling."""
-    return rx.box(
-        rx.box(
-            rx.text(
-                "© 2023 Example Company. All rights reserved."
-            ),
-            width="100%",
-            style=rx.breakpoints(
-                {
-                    "640px": {"max-width": "640px"},
-                    "768px": {"max-width": "768px"},
-                    "1024px": {"max-width": "1024px"},
-                    "1280px": {"max-width": "1280px"},
-                    "1536px": {"max-width": "1536px"},
-                }
-            ),
-            margin_left="auto",
-            margin_right="auto",
-            padding_left="1rem",
-            padding_right="1rem",
-            text_align="center",
-        ),
-        background_color="#1F2937",
-        margin_top="5rem",
-        padding_top="2rem",
-        padding_bottom="2rem",
-        color="#ffffff",
     )
 
 
@@ -202,13 +155,11 @@ def create_main_content():
             margin_right="auto",
             padding_left="1rem",
             padding_right="1rem",
-            padding_top="5rem",
+            padding_top="10rem",
             padding_bottom="5rem",
         ),
         background_color="#F3F4F6",
         font_family='system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-        spacing="5",
-        justify="center",
         position="fixed",
         left="0",
         top="0",
@@ -247,11 +198,11 @@ def index() -> rx.Component:
             render_landing_page(),
             spacing="5",
             justify="center",
-            position="fixed",
-            left="0",
-            top="0",
-            height="100vh",
-            width="100vw",
+            # position="fixed",
+            # left="0",
+            # top="00",
+            # height="100vh",
+            # width="100vw",
         ),
         rx.logo(),
         width="100vw",
@@ -284,5 +235,3 @@ def page() -> rx.Component:
         width="100vw",
         background_color="white",
     )
-
-app.add_page(index)
