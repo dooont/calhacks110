@@ -66,8 +66,32 @@ def create_get_started_button():
 def create_learn_more_button():
     """Create a 'Learn More' button component with styled attributes and responsive width."""
     return rx.el.a(
-        " Learn More ",
+        " Sign Up ",
         href="/signup",
+        background_color="transparent",
+        border_width="1px",
+        border_color="#D1D5DB",
+        font_weight="600",
+        _hover={"background-color": "#E5E7EB"},
+        display="inline-block",
+        padding_left="2rem",
+        padding_right="2rem",
+        padding_top="0.75rem",
+        padding_bottom="0.75rem",
+        border_radius="9999px",
+        color="#374151",
+        font_size="1.125rem",
+        line_height="1.75rem",
+        width=rx.breakpoints(
+            {"0px": "100%", "640px": "auto"}
+        ),
+    )
+
+def create_log_in_button():
+    """Create a 'Log In' button component with styled attributes and responsive width."""
+    return rx.el.a(
+        " Log In ",
+        href="/login",
         background_color="transparent",
         border_width="1px",
         border_color="#D1D5DB",
@@ -91,25 +115,26 @@ def create_learn_more_button():
 def create_hero_section():
     """Create the hero section with heading, description, and action buttons."""
     return rx.box(
-        rx.heading(
-            "Welcome to Our Service",
-            font_weight="700",
-            margin_bottom="2rem",
-            font_size="3rem",
-            line_height="1",
-            color="#111827",
-            as_="h2",
-        ),
-        rx.text(
-            "Discover the best features and boost your productivity with our innovative solutions",
-            margin_bottom="3rem",
-            color="#4B5563",
-            font_size="1.25rem",
-            line_height="1.75rem",
-        ),
+        # rx.heading(
+        #     "Welcome to Our Service",
+        #     font_weight="700",
+        #     margin_bottom="2rem",
+        #     font_size="3rem",
+        #     line_height="1",
+        #     color="#111827",
+        #     as_="h2",
+        # ),
+        # rx.text(
+        #     "Discover the best features and boost your productivity with our innovative solutions",
+        #     margin_bottom="3rem",
+        #     color="#4B5563",
+        #     font_size="1.25rem",
+        #     line_height="1.75rem",
+        # ),
         rx.box(
             create_get_started_button(),
             create_learn_more_button(),
+            create_log_in_button(),
             display="flex",
             flex_direction="column",
             gap="1.5rem",
@@ -210,6 +235,10 @@ def render_landing_page():
         create_main_content(),
     )
 
+
+app = rx.App()
+
+@rx.page(route="/", title="Kneadaschitt")
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
@@ -229,6 +258,31 @@ def index() -> rx.Component:
         background_color="white",
     )
 
+@rx.page(route="/dashboard", title="Dashboard")
+def dashboard() -> rx.Component:
+    return rx.container(
+        rx.color_mode.button(position="top-right"),
+        rx.logo(),
+        width="100vw",
+        background_color="white",
+    )
 
-app = rx.App()
+@rx.page(route="/signup", title="Sign Up")
+def page() -> rx.Component:
+    return rx.container(
+        rx.color_mode.button(position="top-right"),
+        rx.logo(),
+        width="100vw",
+        background_color="white",
+    )
+
+@rx.page(route="/login", title="Sign Up")
+def page() -> rx.Component:
+    return rx.container(
+        rx.color_mode.button(position="top-right"),
+        rx.logo(),
+        width="100vw",
+        background_color="white",
+    )
+
 app.add_page(index)
