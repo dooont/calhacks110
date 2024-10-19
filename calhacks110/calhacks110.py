@@ -10,34 +10,33 @@ class State(rx.State):
 
     ...
 
-
 def create_header():
     """Create a header component with styled text and responsive container."""
     return rx.box(
         rx.heading(
-            "Example Text",
+            "Welcome to Kneadaschitt",
             font_weight="700",
             font_size="1.5rem",
             line_height="2rem",
             color="#1F2937",
             as_="h1",
-        ),        
-        # style=rx.breakpoints(
-        #     {
-        #         "640px": {"max-width": "640px"},
-        #         "768px": {"max-width": "768px"},
-        #         "1024px": {"max-width": "1024px"},
-        #         "1280px": {"max-width": "1280px"},
-        #         "1536px": {"max-width": "1536px"},
-        #     }
-        # ),
+        ),
+        width="100%",
+        style=rx.breakpoints(
+            {
+                "640px": {"max-width": "640px"},
+                "768px": {"max-width": "768px"},
+                "1024px": {"max-width": "1024px"},
+                "1280px": {"max-width": "1280px"},
+                "1536px": {"max-width": "1536px"},
+            }
+        ),
         margin_left="auto",
         margin_right="auto",
         padding_left="1rem",
         padding_right="1rem",
         padding_top="1.5rem",
         padding_bottom="1.5rem",
-        width="100%",
     )
 
 
@@ -129,6 +128,7 @@ def create_footer():
             rx.text(
                 "© 2023 Example Company. All rights reserved."
             ),
+            width="100%",
             style=rx.breakpoints(
                 {
                     "640px": {"max-width": "640px"},
@@ -149,7 +149,6 @@ def create_footer():
         padding_top="2rem",
         padding_bottom="2rem",
         color="#ffffff",
-        width="100%",
     )
 
 
@@ -160,9 +159,11 @@ def create_main_content():
             create_header(),
             background_color="#ffffff",
             box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+            
         ),
         rx.box(
             create_hero_section(),
+            width="100%",
             style=rx.breakpoints(
                 {
                     "640px": {"max-width": "640px"},
@@ -172,17 +173,23 @@ def create_main_content():
                     "1536px": {"max-width": "1536px"},
                 }
             ),
-            # margin_left="auto",
-            # margin_right="auto",
+            margin_left="auto",
+            margin_right="auto",
             padding_left="1rem",
             padding_right="1rem",
             padding_top="5rem",
             padding_bottom="5rem",
         ),
-        create_footer(),
         background_color="#F3F4F6",
         font_family='system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-    )
+        spacing="5",
+        justify="center",
+        position="fixed",
+        left="0",
+        top="0",
+        height="100vh",
+        width="100vw",
+        )
 
 
 def render_landing_page():
@@ -201,15 +208,25 @@ def render_landing_page():
     """
         ),
         create_main_content(),
-        padding="0px",
     )
 
 def index() -> rx.Component:
+    # Welcome Page (Index)
     return rx.container(
-        render_landing_page(),
-        size="4",
-        width="100%",
-        height="100%",
+        rx.color_mode.button(position="top-right"),
+        rx.vstack(
+            render_landing_page(),
+            spacing="5",
+            justify="center",
+            position="fixed",
+            left="0",
+            top="0",
+            height="100vh",
+            width="100vw",
+        ),
+        rx.logo(),
+        width="100vw",
+        background_color="white",
     )
 
 
