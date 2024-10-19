@@ -3,18 +3,22 @@
 import reflex as rx
 
 from rxconfig import config
-
+import csv
 
 class State(rx.State):
     """The app state."""
-
-    ...
+        # Fetch data from Flask API Blueprint
+    async def fetch_message(self):
+        response = await rx.fetch("/api/data")
+        data = await response.json()
+        self.message = data["message"]
+    
 
 def create_header():
     """Create a header component with styled text and responsive container."""
     return rx.box(
         rx.heading(
-            "Welcome to Kneadaschitt",
+            "Welcome to Kneadaschit",
             font_weight="700",
             font_size="1.5rem",
             line_height="2rem",
@@ -155,7 +159,7 @@ def create_main_content():
             margin_right="auto",
             padding_left="1rem",
             padding_right="1rem",
-            padding_top="10rem",
+            padding_top="15rem",
             padding_bottom="5rem",
         ),
         background_color="#F3F4F6",
@@ -185,11 +189,57 @@ def render_landing_page():
         ),
         create_main_content(),
     )
+    
+"""
+----------------------------------------------------------------------------------------------------------------------
+TOILET MAP PAGE
+----------------------------------------------------------------------------------------------------------------------
+"""
 
+class MapComponent(rx.Component):
+    def render_toilets(self, **props):
+        return rx.box(
+            rx.el.div(
+                id='map',
+                style={
+                    'width': '100%',
+                    'height': '100vh',
+                }
+            ),
+            rx.el.script(src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'),
+            rx.el.link(
+                href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css',
+                rel='stylesheet'
+            ),
+            rx.el.script(
+                f"""
+                mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmtjaGFuZzEwMDAiLCJhIjoiY20xbGFzcG1hMDNvaTJxbjY3a3N4NWw4dyJ9.W78DlIwDnlVOrCE5F1OnkQ';
+                const map = new mapboxgl.Map({{
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v11',
+                    center: [-122.4194, 37.7749], // Centered on San Francisco
+                    zoom: 12
+                }});
+
+                const toilets = {props.get('toilets')};
+
+                toilets.forEach(function(toilet) {{
+                    new mapboxgl.Marker()
+                        .setLngLat([toilet.longitude, toilet.latitude])
+                        .setPopup(new mapboxgl.Popup().setHTML(
+                            `<h3>${{toilet.name}}</h3>
+                            <p>Type: ${{toilet.resource_type}}</p>
+                            <p>Access: ${{toilet.access}}</p>`
+                        ))
+                        .addTo(map);
+                }});
+                """
+            ),
+        )
 
 app = rx.App()
 
-@rx.page(route="/", title="Kneadaschitt")
+@rx.page(route="/", title="Home")
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
@@ -213,9 +263,9 @@ def index() -> rx.Component:
 def dashboard() -> rx.Component:
     return rx.container(
         rx.color_mode.button(position="top-right"),
-        rx.logo(),
-        width="100vw",
-        background_color="white",
+        MapComponent.create(), #toilets=load_toilet_data
+        # width="100vw",
+        # background_color="white",
     )
 
 @rx.page(route="/signup", title="Sign Up")
@@ -235,3 +285,5 @@ def page() -> rx.Component:
         width="100vw",
         background_color="white",
     )
+    
+app.add_page(index)

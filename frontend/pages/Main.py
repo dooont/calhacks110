@@ -235,3 +235,5 @@ def page() -> rx.Component:
         width="100vw",
         background_color="white",
     )
+    
+app.add_page(index)
