@@ -1,0 +1,1 @@
+# displays info about toilets when clicked
